@@ -1,3 +1,5 @@
+![blogify](https://github.com/user-attachments/assets/3d322228-9f1e-4500-b7ba-1c68dc147368)
+
 # Blog Application
 
 A simple blog application built using Express.js, EJS, and MongoDB. This application includes user authentication using JSON Web Tokens (JWT) and allows users to view blogs, post comments on existing blogs, and manage their accounts. It includes features such as blog management, profile management, comments and support for image uploads.
