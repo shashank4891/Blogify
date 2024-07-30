@@ -4,6 +4,10 @@
 
 A simple blog application built using Express.js, EJS, and MongoDB. This application includes user authentication using JSON Web Tokens (JWT) and allows users to view blogs, post comments on existing blogs, and manage their accounts. It includes features such as blog management, profile management, comments and support for image uploads.
 
+## Hosted Link
+
+https://blogify-fzlr.onrender.com/
+
 ## Features
 
 - **View Blogs**: Publicly accessible. Users can view a list of blogs and read individual blog posts.
