@@ -1,10 +1,16 @@
 const { Storage } = require('@google-cloud/storage');
-const path = require('path');
+require('dotenv').config();
 
-const KEYFILEPATH = path.resolve(__dirname, 'blogify-node-4891-1aa0b0f9509c.json');
 const BUCKET_NAME = 'bucket-bogify-node';
 
-const storage = new Storage({ keyFilename: KEYFILEPATH });
+const storage = new Storage({
+  projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
+  credentials: {
+    client_email: process.env.GOOGLE_CLOUD_CLIENT_EMAIL,
+    private_key: process.env.GOOGLE_CLOUD_PRIVATE_KEY.replace(/\\n/g, '\n'),
+  },
+});
+
 const bucket = storage.bucket(BUCKET_NAME);
 
 module.exports = bucket;
