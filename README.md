@@ -6,7 +6,7 @@ A simple blog application built using Express.js, EJS, and MongoDB. This applica
 
 ## Hosted Link
 
-Access the live application at https://blogify-fzlr.onrender.com/
+Access the live application at https://blogify-o9di.onrender.com
 
 ## Features
 
