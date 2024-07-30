@@ -6,11 +6,7 @@ A simple blog application built using Express.js, EJS, and MongoDB. This applica
 
 ## Hosted Link
 
-<<<<<<< HEAD
 Access the live application at https://blogify-fzlr.onrender.com/
-=======
-https://blogify-fzlr.onrender.com/
->>>>>>> 91d142eb66b6fb47a69ccc92c0f48ff15028b10b
 
 ## Features
 
@@ -18,11 +14,7 @@ https://blogify-fzlr.onrender.com/
 - **Blog Management**: Protected endpoint. Users must be logged in to add a new blog and edit or delete an existing blog.
 - **Comment on Blog**: Protected endpoint. Users must be logged in to comment on blogs.
 - **User Authentication**: JWT-based authentication to secure protected endpoints.
-<<<<<<< HEAD
 - **User Management**: User can upload profile image or edit their full name to their accounts.
-=======
-- **User Management**: User can upload profile image or edit their full name to their respective accounts.
->>>>>>> 91d142eb66b6fb47a69ccc92c0f48ff15028b10b
 - **Responsive Design**: Optimized for both desktop and mobile views.
 
 ## Technology Stack
