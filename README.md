@@ -8,6 +8,7 @@ A simple blog application built using Express.js, EJS, and MongoDB. This applica
 - **Blog Management**: Protected endpoint. Users must be logged in to add a new blog and edit or delete an existing blog.
 - **Comment on Blog**: Protected endpoint. Users must be logged in to comment on blogs.
 - **User Authentication**: JWT-based authentication to secure protected endpoints.
+- **User Management**: User can upload profile image or edit their full name to their respective accounts.
 - **Responsive Design**: Optimized for both desktop and mobile views.
 
 ## Technology Stack
