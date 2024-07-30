@@ -13,7 +13,7 @@ A simple blog application built using Express.js, EJS, and MongoDB. This applica
 
 ## Technology Stack
 
-- **Backend**: Node.js, Express
+- **Backend**: Node.js, Express.js
 - **Database**: MongoDB
 - **Authentication**: JWT (JSON Web Tokens)
 - **Frontend**: EJS, CSS, Bootstrap
