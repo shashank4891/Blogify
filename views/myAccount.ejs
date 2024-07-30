@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head') %>
+        <title>My Account</title>
+</head>
+
+<body>
+    <%- include('./partials/nav') %>
+
+        <div class="container mt-4">
+            <h2>My Account</h2>
+            <form action="/user/my-account" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="fullName" name="fullName" value="<%= user.fullName %>"
+                        required>
+                </div>
+                <div class="mb-3">
+                    <label for="profileImage" class="form-label">Profile Image</label>
+                    <input class="form-control" type="file" id="profileImage" name="profileImage">
+                    <% if (user.profileImageURL) { %>
+                        <img src="<%= user.profileImageURL %>" alt="Profile Image" width="200px" class="mt-2">
+                    <% } %>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+
+        <%- include('./partials/script') %>
+</body>
+
+</html>

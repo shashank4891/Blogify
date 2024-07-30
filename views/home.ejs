@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head') %>
+        <title>Homepage</title>
+        <style>
+            .card {
+                height: 20rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                position: relative;
+            }
+
+            .card-img-top {
+                object-fit: cover;
+                height: 12rem;
+            }
+
+            .card-body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                flex-grow: 1;
+                padding: 1rem;
+            }
+
+            .card-title {
+                margin-bottom: 1rem;
+                font-weight: bold;
+            }
+
+            .btn-container {
+                position: absolute;
+                bottom: 1rem;
+                left: 1rem;
+            }
+        </style>
+</head>
+
+<body>
+    <%- include('./partials/nav') %>
+
+        <div class="container mt-3">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <% blogs.forEach(blog=> { %>
+                    <div class="col">
+                        <div class="card">
+                            <img src="<%= blog.coverImageURL  %>" class="card-img-top" alt="Cover Image">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%= blog.title %>
+                                </h5>
+                                <div class="btn-container">
+                                    <a href="/blog/<%= blog._id %>" class="btn btn-primary">View Blog</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+            </div>
+        </div>
+
+        <%- include('./partials/script') %>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head') %>
+    <title>My Blogs</title>
+</head>
+
+<body>
+    <%- include('./partials/nav') %>
+    <div class="container mt-4">
+        <h1>My Blogs</h1>
+        <% if (error) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+        <% if (!blogs || blogs.length === 0) { %>
+            <p>You have not created any blogs yet.</p>
+        <% } else { %>
+            <ul class="list-group">
+                <% blogs.forEach(blog => { %>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="/blog/<%= blog._id %>">
+                            <%= blog.title %>
+                        </a>
+                        <div>
+                            <a href="/user/edit-blog/<%= blog._id %>"
+                                class="btn btn-warning btn-sm me-2">Edit</a>
+                            <form action="/user/delete-blog/<%= blog._id %>" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } %>
+    </div>
+    <%- include('./partials/script') %>
+</body>
+
+</html>
