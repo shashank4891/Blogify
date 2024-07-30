@@ -1,5 +1,7 @@
 const User = require("../models/user");
 const Blog = require("../models/blog");
+const bucket = require("../config/gcs");
+const { v4: uuidv4 } = require("uuid");
 const { createTokenForUser } = require("../service/auth");
 
 const renderSignin = (req, res) => {
@@ -64,15 +66,39 @@ const renderMyAccount = (req, res) => {
   });
 };
 
+// Helper function to upload a file to Google Cloud Storage
+const uploadFileToGCS = (file) => {
+  return new Promise((resolve, reject) => {
+    const blob = bucket.file(`${uuidv4()}-${file.originalname}`);
+    const blobStream = blob.createWriteStream({
+      metadata: {
+        contentType: file.mimetype,
+      },
+    });
+
+    blobStream.on("error", (err) => {
+      console.error(err);
+      reject("An error occurred while uploading the image.");
+    });
+
+    blobStream.on("finish", () => {
+      const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+      resolve(publicUrl);
+    });
+
+    blobStream.end(file.buffer);
+  });
+};
+
 const updateUser = async (req, res) => {
   const { fullName } = req.body;
-
   let profileImageURL = req.user.profileImageURL;
-  if (req.file) {
-    profileImageURL = `/images/${req.file.filename}`;
-  }
 
   try {
+    if (req.file) {
+      profileImageURL = await uploadFileToGCS(req.file);
+    }
+
     const user = await User.findByIdAndUpdate(
       req.user._id,
       { fullName, profileImageURL },
@@ -86,7 +112,8 @@ const updateUser = async (req, res) => {
   } catch (error) {
     return res.render("myAccount", {
       user: req.user,
-      error: "An error occurred while updating your information.",
+      error:
+        error.message || "An error occurred while updating your information.",
     });
   }
 };
@@ -94,9 +121,13 @@ const updateUser = async (req, res) => {
 const renderMyBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find({ createdBy: req.user._id });
-    res.render("myBlogs", { user: req.user, blogs,  error: null });
+    res.render("myBlogs", { user: req.user, blogs, error: null });
   } catch (error) {
-    res.render("myBlogs", { user: req.user, blogs: [], error: "Failed to fetch blogs" });
+    res.render("myBlogs", {
+      user: req.user,
+      blogs: [],
+      error: "Failed to fetch blogs",
+    });
   }
 };
 
@@ -116,12 +147,12 @@ const renderEditBlog = async (req, res) => {
 const updateBlog = async (req, res) => {
   const { title, body } = req.body;
 
-  let coverImageURL;
-  if (req.file) {
-    coverImageURL = `/uploads/${req.file.filename}`;
-  }
-
   try {
+    let coverImageURL;
+    if (req.file) {
+      coverImageURL = await uploadFileToGCS(req.file);
+    }
+
     const updateFields = { title, body };
     if (coverImageURL) {
       updateFields.coverImageURL = coverImageURL;
@@ -132,15 +163,21 @@ const updateBlog = async (req, res) => {
       updateFields,
       { new: true, runValidators: true }
     );
-    res.redirect(`/blog/${blog._id}`);
+
+    return res.redirect(`/blog/${blog._id}`);
   } catch (error) {
-    res.redirect(`/user/edit-blog/${req.params.id}`);
+    console.error(error);
+    return res.redirect(`/user/edit-blog/${req.params.id}`);
   }
 };
 
+
 const deleteBlog = async (req, res) => {
   try {
-    await Blog.findOneAndDelete({ _id: req.params.id, createdBy: req.user._id });
+    await Blog.findOneAndDelete({
+      _id: req.params.id,
+      createdBy: req.user._id,
+    });
     res.redirect("/user/my-blogs");
   } catch (error) {
     res.redirect("/user/my-blogs");

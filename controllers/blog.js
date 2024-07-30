@@ -1,6 +1,7 @@
 const Blog = require("../models/blog");
 const Comment = require("../models/comment");
-const path = require("path");
+const bucket = require("../config/gcs");
+const { v4: uuidv4 } = require("uuid");
 
 const renderAddNewBlog = (req, res) => {
   return res.render("addBlog", {
@@ -41,13 +42,35 @@ const createBlog = async (req, res) => {
   }
 
   try {
-    const blog = await Blog.create({
-      body,
-      title,
-      createdBy: req.user._id,
-      coverImageURL: `/uploads/${req.file.filename}`,
+    const blob = bucket.file(`${uuidv4()}-${req.file.originalname}`);
+    const blobStream = blob.createWriteStream({
+      metadata: {
+        contentType: req.file.mimetype,
+      },
     });
-    return res.redirect(`/blog/${blog._id}`);
+
+    blobStream.on("error", (err) => {
+      console.error(err);
+      res.render("addBlog", {
+        user: req.user,
+        error: "An error occurred while uploading the image.",
+      });
+    });
+
+    blobStream.on("finish", async () => {
+      const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+
+      const blog = await Blog.create({
+        body,
+        title,
+        createdBy: req.user._id,
+        coverImageURL: publicUrl,
+      });
+
+      return res.redirect(`/blog/${blog._id}`);
+    });
+
+    blobStream.end(req.file.buffer);
   } catch (error) {
     if (error.name === "ValidationError") {
       const errorMessages = Object.values(error.errors)

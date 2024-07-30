@@ -1,5 +1,5 @@
 const express = require("express");
-const { connectToMongoDB } = require("./config");
+const { connectToMongoDB } = require("./config/config");
 const path = require("path");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");

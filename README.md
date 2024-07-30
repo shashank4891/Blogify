@@ -1,6 +1,12 @@
-# Blog Application
+![blogify](https://github.com/user-attachments/assets/3d322228-9f1e-4500-b7ba-1c68dc147368)
+
+# Blogify
 
 A simple blog application built using Express.js, EJS, and MongoDB. This application includes user authentication using JSON Web Tokens (JWT) and allows users to view blogs, post comments on existing blogs, and manage their accounts. It includes features such as blog management, profile management, comments and support for image uploads.
+
+## Hosted Link
+
+Access the live application at https://blogify-fzlr.onrender.com/
 
 ## Features
 
@@ -8,14 +14,16 @@ A simple blog application built using Express.js, EJS, and MongoDB. This applica
 - **Blog Management**: Protected endpoint. Users must be logged in to add a new blog and edit or delete an existing blog.
 - **Comment on Blog**: Protected endpoint. Users must be logged in to comment on blogs.
 - **User Authentication**: JWT-based authentication to secure protected endpoints.
+- **User Management**: User can upload profile image or edit their full name to their accounts.
 - **Responsive Design**: Optimized for both desktop and mobile views.
 
 ## Technology Stack
 
-- **Backend**: Node.js, Express
+- **Backend**: Node.js, Express.js
 - **Database**: MongoDB
 - **Authentication**: JWT (JSON Web Tokens)
 - **Frontend**: EJS, CSS, Bootstrap
+- **Cloud Storage**: Google Cloud Storage for handling image uploads
 
 ## Setup Instructions
 
@@ -23,6 +31,7 @@ A simple blog application built using Express.js, EJS, and MongoDB. This applica
 
 - [Node.js](https://nodejs.org) (v18 or later)
 - [MongoDB](https://www.mongodb.com) (installed and running)
+- [Google Cloud Storage](https://cloud.google.com/storage) (for image uploads)
 
 ### Installation
 
@@ -47,6 +56,8 @@ A simple blog application built using Express.js, EJS, and MongoDB. This applica
     MONGODB_URI=mongodb://localhost:27017/blogapp
     PORT=3000
     SECRET_KEY=secret
+    GOOGLE_CLOUD_PROJECT_ID=your_project_id
+    GOOGLE_CLOUD_KEYFILE_PATH=path/to/your/keyfile.json
     ```
 
 4. **Start the application**:
@@ -59,7 +70,7 @@ A simple blog application built using Express.js, EJS, and MongoDB. This applica
 
 ## Frontend
 
-The front-end is designed with Bootstrap for responsive and mobile-friendly layouts. The application features a clean and intuitive design with dark mode support.
+The front-end is designed with Bootstrap for responsive and mobile-friendly layouts. The application features a clean and intuitive design.
 
 ## Authentication
 
@@ -73,6 +84,7 @@ JWT (JSON Web Tokens) is used for user authentication. Upon login, users receive
 - **`routes/`**: Defines routes for various endpoints.
 - **`views/`**: EJS templates for rendering HTML.
 - **`public/`**: Static files such as images, CSS, and JavaScript.
+- **`config/`**: Configuration files, including Google Cloud Storage settings.
 
 ## Contributing
 
@@ -93,6 +105,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [Bootstrap](https://getbootstrap.com) for responsive design.
 - [EJS](https://www.npmjs.com/package/ejs) for templating.
 - [Mongoose](https://mongoosejs.com) for MongoDB object modeling.
+- [Google Cloud Storage](https://cloud.google.com/storage) (for image uploads)
 
 ## Contact
 

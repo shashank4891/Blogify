@@ -22,7 +22,7 @@ const userSchema = new Schema(
     },
     profileImageURL: {
       type: String,
-      default: "/images/profile.png",
+      default: "https://storage.googleapis.com/bucket-bogify-node/profile.png",
     },
     role: {
       type: String,

@@ -1,6 +1,5 @@
   const express = require("express");
   const multer = require("multer");
-  const path = require("path");
   const {
     renderSignin,
     renderSignup,
@@ -18,28 +17,16 @@
 
   const router = express.Router();
 
-  const profileImageStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, path.resolve(`./public/images/`));
-    },
-    filename: function (req, file, cb) {
-      const fileName = `${Date.now()}-${file.originalname}`;
-      cb(null, fileName);
-    },
-  });
-
-  const coverImageStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, path.resolve(`./public/uploads/`));
-    },
-    filename: function (req, file, cb) {
-      const fileName = `${Date.now()}-${file.originalname}`;
-      cb(null, fileName);
+  const uploadMemoryStorage = multer({
+    storage: multer.memoryStorage(),
+    fileFilter: (req, file, cb) => {
+      if (file.mimetype.startsWith("image/")) {
+        cb(null, true);
+      } else {
+        cb(new Error("Only image files are allowed"), false);
+      }
     },
   });
-
-  const uploadProfileImage = multer({ storage: profileImageStorage });
-  const uploadCoverImage = multer({ storage: coverImageStorage });
 
   router.get("/signin", renderSignin);
 
@@ -53,13 +40,13 @@
 
   router.get("/my-account", renderMyAccount);
 
-  router.post("/my-account", uploadProfileImage.single("profileImage"), updateUser);
+  router.post("/my-account", uploadMemoryStorage.single("profileImage"), updateUser);
 
   router.get("/my-blogs", renderMyBlogs);
 
   router.get("/edit-blog/:id", renderEditBlog);
 
-  router.post("/update-blog/:id", uploadCoverImage.single("coverImage"), updateBlog);
+  router.post("/update-blog/:id", uploadMemoryStorage.single("coverImage"), updateBlog);
 
   router.post("/delete-blog/:id", deleteBlog);
 
