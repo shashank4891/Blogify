@@ -1,21 +1,21 @@
 # Blog Application
 
-A simple blog application built using Express.js, EJS, and MongoDB. This application allows users to view blogs, post comments, and manage their accounts. It includes features such as blog management, profile management, and comments with support for image uploads.
+A simple blog application built using Express.js, EJS, and MongoDB. This application includes user authentication using JSON Web Tokens (JWT) and allows users to view blogs, post comments on existing blogs, and manage their accounts. It includes features such as blog management, profile management, comments and support for image uploads.
 
 ## Features
 
-- **Blog Management**: Create, view, and update blogs.
-- **User Authentication**: Sign up, sign in, and manage user profiles.
-- **Comments**: Add and view comments on blogs.
+- **View Blogs**: Publicly accessible. Users can view a list of blogs and read individual blog posts.
+- **Blog Management**: Protected endpoint. Users must be logged in to add a new blog and edit or delete an existing blog.
+- **Comment on Blog**: Protected endpoint. Users must be logged in to comment on blogs.
+- **User Authentication**: JWT-based authentication to secure protected endpoints.
 - **Responsive Design**: Optimized for both desktop and mobile views.
 
-## Technologies Used
+## Technology Stack
 
-- **Node.js**: JavaScript runtime for server-side code.
-- **Express.js**: Web framework for Node.js.
-- **EJS**: Templating engine for rendering HTML.
-- **MongoDB**: NoSQL database for data storage.
-- **Bootstrap**: CSS framework for responsive design.
+- **Backend**: Node.js, Express
+- **Database**: MongoDB
+- **Authentication**: JWT (JSON Web Tokens)
+- **Frontend**: EJS, CSS, Bootstrap
 
 ## Setup Instructions
 
@@ -57,11 +57,13 @@ A simple blog application built using Express.js, EJS, and MongoDB. This applica
 
     The application will be running on `http://localhost:3000`.
 
-## Usage
+## Frontend
 
-- **Home Page**: View the list of blogs. This is a public endpoint and accessible to everyone.
-- **Blog Page**: View details of a specific blog, including comments. This is also a public endpoint.
-- **My Account Page**: Manage your account information and profile image. Access to add a blog or comment on a blog requires user authentication. These endpoints are protected and require you to log in before accessing them.
+The front-end is designed with Bootstrap for responsive and mobile-friendly layouts. The application features a clean and intuitive design with dark mode support.
+
+## Authentication
+
+JWT (JSON Web Tokens) is used for user authentication. Upon login, users receive a JWT that must be included in the headers of requests to access protected endpoints.
 
 ## Code Structure
 
